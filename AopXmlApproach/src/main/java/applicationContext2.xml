@@ -1,0 +1,22 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="userAuthentication" class="com.assgn1.UserAuthentication"/>
+    <bean id="secureDataService" class="com.assgn1.SecureDataService"/>
+    
+    <bean id = "securityAspect" class = "com.assgn1.SecurityAspect"> 
+         <property name = "userAuthentication" ref = "userAuthentication"></property> 
+    </bean>
+    
+    
+    <aop:config>
+        <aop:aspect ref="securityAspect">
+            <aop:pointcut id="secureMethods" expression="execution(* com.assgn1.SecureDataService.*(..))"/>
+             <aop:around method="checkAuthentication" pointcut-ref="secureMethods"/>
+           
+        </aop:aspect>
+    </aop:config>
+</beans>

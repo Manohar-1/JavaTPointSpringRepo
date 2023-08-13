@@ -1,0 +1,17 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="loggingAspect" class = "com.assgn2.LoggingAspect"></bean> 
+    <bean id="myService" class = "com.assgn2.MyService"></bean>  
+    
+    <aop:config>
+       <aop:aspect ref = "loggingAspect">
+          <aop:pointcut id = "myServiceAOPMethod" expression = "execution(* com.assgn2.MyService.*(..))"/>  
+          <aop:before method="beforeMethod" pointcut-ref ="myServiceAOPMethod"/> 
+          <aop:after-returning method="afterReturningMethod" pointcut-ref = "myServiceAOPMethod"/>
+       </aop:aspect>
+    </aop:config>
+</beans>
